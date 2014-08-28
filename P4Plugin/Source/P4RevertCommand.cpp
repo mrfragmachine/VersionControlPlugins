@@ -19,9 +19,9 @@ public:
 	
 		string cmd = SetupCommand(args);
 	
-		VersionedAssetList assetList;
-		Conn() >> assetList;
-		string paths = ResolvePaths(assetList, kPathWild | kPathSkipFolders);
+		VersionedAssetList incomingAssetList;
+		Conn() >> incomingAssetList;
+		string paths = ResolvePaths(incomingAssetList, kPathWild | kPathSkipFolders);
 	
 		Conn().Log().Debug() << "Paths resolved are: " << paths << Endl;
 	
@@ -47,6 +47,9 @@ public:
 			Conn().EndResponse();
 			return true;
 		}
+
+		VersionedAssetList assetList;
+		RunAndGetStatus(task, incomingAssetList, assetList);
 
 		IncludeFolders(assetList);
 
