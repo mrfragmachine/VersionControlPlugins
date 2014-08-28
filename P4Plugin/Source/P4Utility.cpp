@@ -12,6 +12,7 @@ int ActionToState(const string& action, const string& headAction,
 	
 	if (action == "add") state |= kAddedLocal;
 	else if (action == "move/add") state |= kAddedLocal | kMovedLocal;
+	else if (action == "branch") state |= kAddedLocal;
 	else if (action == "edit") state |= kCheckedOutLocal;
 	else if (action == "delete") state |= kDeletedLocal;
 	else if (action == "move/delete") state |= kDeletedLocal | kMovedLocal;
