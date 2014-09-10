@@ -179,6 +179,16 @@ private:
 			string resolvedDstPath = ResolvePaths(b+1, b+2, kPathWild | kPathRecursive);
 			string resolvedSrcDstPaths = ResolvePaths(b, e, kPathWild | kPathRecursive);
 
+			// Prevent moving identical files (since that will end up deleting it).
+			// Note: This happens when a files casing is changed. However, the asset list doesn't reflect that case 
+			// change. As such it's an issue with the Unity editor i.e. it shouldn't issue NOP commands. Also, a case
+			// change should only be reflected in Perforce if the server is set to being case sensitive.
+			if (resolvedSrcPath == resolvedDstPath)
+			{
+				b = e;
+				continue;
+			}
+
 			// An added file can't be integrated. It must instead be moved locally on disk, 
 			// reverted and then re-added to the changelist. 
 			if (src.GetState() & kAddedLocal)

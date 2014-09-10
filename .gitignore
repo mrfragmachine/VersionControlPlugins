@@ -1,2 +1,8 @@
 Build/
+Debug/
 Release/
+ipch/
+*.vcxproj.user
+*.opensdf
+*.sdf
+*.suo
